@@ -5,7 +5,7 @@ RSpec.describe 'Items API', type: :request do
   let(:user) { create(:user) }
   let(:todo) { create(:todo, created_by: user.id) }
   let(:item) { create(:item, todo_id: todo.id) }
-  let(:Authorization) { AuthenticateUser.new(user.email, user.password).call[:auth_token] }
+  let(:Authorization) { AuthenticateUser.new(user.email, user.password).call }
 
   path '/todos/{todo_id}/items' do
     parameter name: 'todo_id', in: :path, type: :integer, description: 'ID of the parent todo'
@@ -20,7 +20,7 @@ RSpec.describe 'Items API', type: :request do
         run_test!
       end
 
-      response(401, 'unauthorized') do
+      response(422, 'unauthorized') do
         let(:todo_id) { todo.id }
         let(:Authorization) { nil }
         run_test!

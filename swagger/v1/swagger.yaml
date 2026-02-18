@@ -95,7 +95,7 @@ paths:
       responses:
         '200':
           description: successful
-        '401':
+        '422':
           description: unauthorized
     post:
       summary: Create an item
@@ -185,7 +185,7 @@ paths:
       responses:
         '200':
           description: successful
-        '401':
+        '422':
           description: unauthorized
     post:
       summary: Create a todo

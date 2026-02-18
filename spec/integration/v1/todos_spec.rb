@@ -4,7 +4,7 @@ RSpec.describe 'Todos API', type: :request do
   # Setup data for the tests
   let(:user) { create(:user) }
   let(:todo) { create(:todo, created_by: user.id) }
-  let(:Authorization) { AuthenticateUser.new(user.email, user.password).call[:auth_token] }
+  let(:Authorization) { AuthenticateUser.new(user.email, user.password).call }
 
   path '/todos' do
     get('List todos') do
@@ -18,8 +18,9 @@ RSpec.describe 'Todos API', type: :request do
         run_test!
       end
 
-      response(401, 'unauthorized') do
+      response(422, 'unauthorized') do
         let(:Authorization) { nil }
+        let(:page) { 1 }
         run_test!
       end
     end

@@ -46,7 +46,7 @@ RSpec.describe 'Authentication API', type: :request do
 
       response(200, 'successful logout') do
         let(:user) { create(:user) }
-        let(:Authorization) { AuthenticateUser.new(user.email, user.password).call[:auth_token] }
+        let(:Authorization) { AuthenticateUser.new(user.email, user.password).call }
         run_test!
       end
     end
