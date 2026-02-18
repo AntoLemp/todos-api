@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :todo do
-    title { "MyString" }
-    created_by { "MyString" }
+    title { Faker::Lorem.word }
+    created_by { Faker::Number.number(digits: 10) }
   end
 end
