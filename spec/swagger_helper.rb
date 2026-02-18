@@ -20,7 +20,7 @@ RSpec.configure do |config|
       info: {
         title: 'Todos API User Manual',
         version: 'v1',
-        description: 'This is a sample server Todos API for Rails.'
+        description: 'This is a RESTful JSON Todos API built with Rails 8. It was developed by Antonios Evangelos Lempesis, following the tutorial Build a RESTful JSON API With Rails 5 by Austin Kabiru '
       },
       paths: {},
       servers: [
