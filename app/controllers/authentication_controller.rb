@@ -7,6 +7,9 @@ class AuthenticationController < ApplicationController
     json_response(auth_token: auth_token)
   end
 
+  def logout
+    json_response({ message: 'Logout successful. Please delete your token.' })
+  end
   private
 
   def auth_params

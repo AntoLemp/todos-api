@@ -1,0 +1,266 @@
+---
+openapi: 3.0.1
+info:
+  title: Todos API User Manual
+  version: v1
+  description: This is a sample server Todos API for Rails.
+paths:
+  "/auth/login":
+    post:
+      summary: Login to get Token
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '200':
+          description: successful login
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: ash@test.com
+                password:
+                  type: string
+                  example: foobar
+              required:
+              - email
+              - password
+  "/auth/logout":
+    get:
+      summary: Logout user
+      tags:
+      - Authentication
+      security:
+      - bearer_auth: []
+      description: Notifies the server to invalidate the session/token.
+      responses:
+        '200':
+          description: successful logout
+  "/signup":
+    post:
+      summary: Create User / Signup
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '201':
+          description: User created successfully
+        '422':
+          description: Validation Failed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Ash Ketchum
+                email:
+                  type: string
+                  example: ash@test.com
+                password:
+                  type: string
+                  example: foobar
+                password_confirmation:
+                  type: string
+                  example: foobar
+              required:
+              - name
+              - email
+              - password
+              - password_confirmation
+  "/todos/{todo_id}/items":
+    parameters:
+    - name: todo_id
+      in: path
+      description: ID of the parent todo
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: List items for a todo
+      tags:
+      - Items
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+    post:
+      summary: Create an item
+      tags:
+      - Items
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '201':
+          description: item created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                done:
+                  type: boolean
+              required:
+              - name
+  "/todos/{todo_id}/items/{id}":
+    parameters:
+    - name: todo_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Show item details
+      tags:
+      - Items
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: Update an item
+      tags:
+      - Items
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '204':
+          description: item updated
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                done:
+                  type: boolean
+    delete:
+      summary: Delete an item
+      tags:
+      - Items
+      security:
+      - bearer_auth: []
+      responses:
+        '204':
+          description: item deleted
+  "/todos":
+    get:
+      summary: List todos
+      tags:
+      - Todos
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+    post:
+      summary: Create a todo
+      tags:
+      - Todos
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '201':
+          description: todo created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Learn Rails 8
+                created_by:
+                  type: string
+                  example: '1'
+              required:
+              - title
+  "/todos/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: Todo ID
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Show a todo
+      tags:
+      - Todos
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: todo not found
+    put:
+      summary: Update a todo
+      tags:
+      - Todos
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '204':
+          description: todo updated
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+    delete:
+      summary: Delete a todo
+      tags:
+      - Todos
+      security:
+      - bearer_auth: []
+      responses:
+        '204':
+          description: todo deleted
+servers:
+- url: http://127.0.0.1:3000
+  description: Local development server
+components:
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
