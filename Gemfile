@@ -36,7 +36,7 @@ gem "image_processing", "~> 1.2"
 gem "rack-cors"
 gem "bcrypt", "~> 3.1.7"
 gem "jwt"
-gem "will_paginate", "~> 3.1.0"
+gem "will_paginate", "~> 4.0.1"
 gem "active_model_serializers", "~> 0.10.0"
 gem 'rswag-api'
 gem 'rswag-ui'
